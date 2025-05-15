@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- -->
+    <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="https://miramappa.net/navigator.css?v=1.2">
+    <!-- -->
+    <title>Gradient Generator | MiraMappa Studio</title>
+    
+    <meta content="Gradient Generator | MiraMappa Studio" property="og:title" />
+    <meta content="Simple gradient generator with nice customizability" property="og:description" />
+    <meta content="https://miramappa.net/gradient-generator" property="og:url" />
+    <meta content="https://miramappa.net/gradient-generator/meta_image.png" property="og:image" />
+    <meta content="#9500ff" data-react-helmet="true" name="theme-color" />
+    
+</head>
+<body>
+    
+    <div class="uni-header">
+        <div class="logo"><img src="https://miramappa.net/assets/logo.png" alt="logo"/></div>
+        <div class="navigator">
+         <div class="nav-item" id="home">
+             <a class="nav-text" href="../">Home</a>
+         </div>
+        <div class="nav-item" id="gradient-generator">
+         <!-- <div class="highlight">NEW!</div> --><p class="nav-text  current">GRADIENT GENERATOR</p>
+        </div>
+        </div>
+    </div>
+
+    <div class="grid" id="grid">
+        <div class="header" style="grid-column:1/4">v1.2<a target="_blank" href="changelog.html">what's new?</a>
+            <!-- <div class="logo" onclick="window.location.href = 'https\:\/\/miramappa.net';"><img src="../assets/logo.png" alt="Logo"></div> -->
+            <div class="title"><h1>GRADIENT GENERATOR </h1></div>
+        </div>
+        <div class="gradient" style="grid-column:1/4">
+            slots
+            <div class="gradient-slots" id="slots-box">
+                <div id="no-slots-text">saved gradients will appear here</div>
+<!--                 <div class="gradient-slot" id="slot-1"></div>
+                <div class="gradient-slot" id="slot-2"></div>
+                <div class="gradient-slot" id="slot-3"></div>
+                <div class="gradient-slot" id="slot-4"></div> -->
+            </div>
+            <div class="input-button" id="slots-buttons"><button id="button-save">save to new slot</button><!-- <button id="button-override">override slot</button><button id="button-delete-slot">delete slot</button> --><!-- <button id="button-export">export palette</button> --></div>
+            gradient
+            <div class="gradient-box">
+                <div class="gradients-side" id="grad-left">
+                    <!-- <div class="gradient-unit" id="grad-1"></div> -->
+                    <!-- <div class="gradient-unit" id="grad-2"></div> -->
+                </div>
+
+                <div class="gradient-center">
+                    <div id="grad-center" style="  height: 10em;width: 10em;" onclick="grabColor(event)"><div class="prompt"></div></div>
+                </div>
+
+                <div class="gradients-side" id="grad-right">
+                    <!-- <div class="gradient-unit" id="grad-4"></div> -->
+                    <!-- <div class="gradient-unit" id="grad-5"></div> -->
+                </div>
+
+            </div>
+        </div>
+        <div class="rng">rng
+            <div class="rng-section">
+                <div class="rng-label">random contrast</div>
+                <div class="rng-button" id="button-rng-contrast" onclick="checkboxToggle('contrast')"><div class="rng-button-thumb"></div></div>
+            </div>
+            <div class="rng-section">
+                <div class="rng-label">random hue</div>
+                <div class="rng-button" id="button-rng-hue" onclick="checkboxToggle('hue')"><div class="rng-button-thumb"></div></div>
+            </div>
+            <div class="rng-section">
+                <div class="rng-label">random color</div>
+                <div class="rng-button on" id="button-rng-color" onclick="checkboxToggle('color')"><div class="rng-button-thumb"></div></div>
+            </div>
+            <div class="input-button">
+                <button id="button-randomize" onclick="gradientRandomize()">randomize</button>
+            </div>
+        </div>
+        <div class="input">input<br>
+            <div class="input-color">
+                <p>color</p>
+                <div class="input-color-box"><input type="text" id="color-hex" value="#ffffff" maxlength="7" onclick="this.select()"><input id="color" type="color" value="#ffffff"></div>
+            </div>
+            <div class="input-slider">
+                <p>amount of shades:</p>
+                <div>
+                <input type="range" id="color-amount" min="3" max="15" step="2" value="5"><label id="value-colors" for="color-amount">3</label>
+                </div>
+            </div>
+            <div class="input-button">
+                <button id="button-generate" onclick="gradientGenerate()">generate</button>
+            </div>
+        </div>
+        <div class="config">config
+            <div class="config-labels">
+                <p>contrast</p>
+                <p>hue shift</p>
+            </div>
+            <div class="config-sliders">
+                <input type="range" id="slider-contrast" min="0" max="100" step="2" value="50">
+                <input type="range" id="slider-hue" min="0" max="100" step="2" value="10">
+            </div>
+            <div class="config-values">
+                <p id="value-contrast">0</p>
+                <p id="value-hue">0</p>
+            </div>
+        </div>
+        <div class="extra" style="grid-column:1/4">extra
+            <div style="color: #e97171; text-align: center;">
+                warning! these settings may cause unstable results</div>
+
+                <div class="extra-box">
+                <div>
+                <div class="rng-section">
+                    <div class="rng-label">random contrast</div>
+                    <div class="rng-button" id="button-rng-contrast" onclick="checkboxToggle('contrast')"><div class="rng-button-thumb"></div></div>
+                </div>
+                <div class="rng-section">
+                    <div class="rng-label">random hue</div>
+                    <div class="rng-button" id="button-rng-hue" onclick="checkboxToggle('hue')"><div class="rng-button-thumb"></div></div>
+                </div>
+                <div class="rng-section">
+                    <div class="rng-label">random color</div>
+                    <div class="rng-button on" id="button-rng-color" onclick="checkboxToggle('color')"><div class="rng-button-thumb"></div></div>
+                </div>
+                </div>
+
+                <div>
+                    <div class="rng-section">
+                        <div class="rng-label">random contrast</div>
+                        <div class="rng-button" id="button-rng-contrast" onclick="checkboxToggle('contrast')"><div class="rng-button-thumb"></div></div>
+                    </div>
+                    <div class="rng-section">
+                        <div class="rng-label">random hue</div>
+                        <div class="rng-button" id="button-rng-hue" onclick="checkboxToggle('hue')"><div class="rng-button-thumb"></div></div>
+                    </div>
+                    <div class="rng-section">
+                        <div class="rng-label">random color</div>
+                        <div class="rng-button on" id="button-rng-color" onclick="checkboxToggle('color')"><div class="rng-button-thumb"></div></div>
+                    </div>
+                </div>
+
+                </div>
+        </div>
+        <div class="footer" style="grid-column:1/4">footer
+        <div style="color: #8827cd;;">
+            Coded by XeKyT @ MiraMappa Studio</div>
+            <div>
+            <div class="links" style="color: #8827cd;;">
+            Links:
+            <a href="https://youtube.com/@XeKyT0811">My YT Channel</a>
+            <a href="https://miramappa.net">Miramappa.net</a>
+            <a href="https://www.planetminecraft.com/group/miramappa/">Planetminecraft</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- <div class="popup">copied to clipboard!</div> -->
+</body>
+
+<script type="text/javascript" src="main.js?v=1.2"></script>
+
+</html>
